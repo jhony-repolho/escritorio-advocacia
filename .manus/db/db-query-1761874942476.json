@@ -1,0 +1,90 @@
+{
+  "query": "SELECT * FROM daily_indices WHERE indexType = 'IPCA' ORDER BY date DESC LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3MN9iEmQUJboaPq.root --database eQB7vKmF3zqhgFdTow5mva --execute SELECT * FROM daily_indices WHERE indexType = 'IPCA' ORDER BY date DESC LIMIT 10;",
+  "rows": [
+    {
+      "id": "11504",
+      "indexType": "IPCA",
+      "date": "2025-09-30",
+      "dailyIndex": "0.000159629964",
+      "accumulated": "2.438729140153",
+      "createdAt": "2025-10-30 22:35:07"
+    },
+    {
+      "id": "11503",
+      "indexType": "IPCA",
+      "date": "2025-09-29",
+      "dailyIndex": "0.000159629964",
+      "accumulated": "2.438339908042",
+      "createdAt": "2025-10-30 22:35:07"
+    },
+    {
+      "id": "11502",
+      "indexType": "IPCA",
+      "date": "2025-09-28",
+      "dailyIndex": "0.000159629964",
+      "accumulated": "2.437950738053",
+      "createdAt": "2025-10-30 22:35:07"
+    },
+    {
+      "id": "11501",
+      "indexType": "IPCA",
+      "date": "2025-09-27",
+      "dailyIndex": "0.000159629964",
+      "accumulated": "2.437561630178",
+      "createdAt": "2025-10-30 22:35:07"
+    },
+    {
+      "id": "11500",
+      "indexType": "IPCA",
+      "date": "2025-09-26",
+      "dailyIndex": "0.000159629964",
+      "accumulated": "2.437172584407",
+      "createdAt": "2025-10-30 22:35:07"
+    },
+    {
+      "id": "11499",
+      "indexType": "IPCA",
+      "date": "2025-09-25",
+      "dailyIndex": "0.000159629964",
+      "accumulated": "2.436783600728",
+      "createdAt": "2025-10-30 22:35:07"
+    },
+    {
+      "id": "11498",
+      "indexType": "IPCA",
+      "date": "2025-09-24",
+      "dailyIndex": "0.000159629964",
+      "accumulated": "2.436394679134",
+      "createdAt": "2025-10-30 22:35:07"
+    },
+    {
+      "id": "11497",
+      "indexType": "IPCA",
+      "date": "2025-09-23",
+      "dailyIndex": "0.000159629964",
+      "accumulated": "2.436005819613",
+      "createdAt": "2025-10-30 22:35:07"
+    },
+    {
+      "id": "11496",
+      "indexType": "IPCA",
+      "date": "2025-09-22",
+      "dailyIndex": "0.000159629964",
+      "accumulated": "2.435617022155",
+      "createdAt": "2025-10-30 22:35:07"
+    },
+    {
+      "id": "11495",
+      "indexType": "IPCA",
+      "date": "2025-09-21",
+      "dailyIndex": "0.000159629964",
+      "accumulated": "2.435228286752",
+      "createdAt": "2025-10-30 22:35:07"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tindexType\tdate\tdailyIndex\taccumulated\tcreatedAt\n11504\tIPCA\t2025-09-30\t0.000159629964\t2.438729140153\t2025-10-30 22:35:07\n11503\tIPCA\t2025-09-29\t0.000159629964\t2.438339908042\t2025-10-30 22:35:07\n11502\tIPCA\t2025-09-28\t0.000159629964\t2.437950738053\t2025-10-30 22:35:07\n11501\tIPCA\t2025-09-27\t0.000159629964\t2.437561630178\t2025-10-30 22:35:07\n11500\tIPCA\t2025-09-26\t0.000159629964\t2.437172584407\t2025-10-30 22:35:07\n11499\tIPCA\t2025-09-25\t0.000159629964\t2.436783600728\t2025-10-30 22:35:07\n11498\tIPCA\t2025-09-24\t0.000159629964\t2.436394679134\t2025-10-30 22:35:07\n11497\tIPCA\t2025-09-23\t0.000159629964\t2.436005819613\t2025-10-30 22:35:07\n11496\tIPCA\t2025-09-22\t0.000159629964\t2.435617022155\t2025-10-30 22:35:07\n11495\tIPCA\t2025-09-21\t0.000159629964\t2.435228286752\t2025-10-30 22:35:07\n",
+  "stderr": "",
+  "execution_time_ms": 147
+}
