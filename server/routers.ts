@@ -36,19 +36,24 @@ export const appRouter = router({
         dataPrimeiraParcela: z.string(),
         indiceCorrecao: z.enum(["INCC", "IPCA"]).optional(),
       }))
-      .query(async ({ input }) => {
-        const parcelas = await calcularPrice(
-          input.valorImovel,
-          input.entrada,
-          input.taxaJuros,
-          input.quantidadeParcelas,
-          input.dataContrato,
-          input.dataPrimeiraParcela,
-          input.ehTaxaAnual,
-          input.indiceCorrecao
-        );
-        
-        return { parcelas };
+      .mutation(async ({ input }) => {
+        try {
+          const parcelas = await calcularPrice(
+            input.valorImovel,
+            input.entrada,
+            input.taxaJuros,
+            input.quantidadeParcelas,
+            input.dataContrato,
+            input.dataPrimeiraParcela,
+            input.ehTaxaAnual,
+            input.indiceCorrecao
+          );
+          
+          return { parcelas };
+        } catch (error) {
+          console.error("Erro ao calcular PRICE:", error);
+          throw error;
+        }
       }),
 
     calcularMQJS: publicProcedure
@@ -62,19 +67,24 @@ export const appRouter = router({
         dataPrimeiraParcela: z.string(),
         indiceCorrecao: z.enum(["INCC", "IPCA"]).optional(),
       }))
-      .query(async ({ input }) => {
-        const parcelas = await calcularMQJS(
-          input.valorImovel,
-          input.entrada,
-          input.taxaJuros,
-          input.quantidadeParcelas,
-          input.dataContrato,
-          input.dataPrimeiraParcela,
-          input.ehTaxaAnual,
-          input.indiceCorrecao
-        );
-        
-        return { parcelas };
+      .mutation(async ({ input }) => {
+        try {
+          const parcelas = await calcularMQJS(
+            input.valorImovel,
+            input.entrada,
+            input.taxaJuros,
+            input.quantidadeParcelas,
+            input.dataContrato,
+            input.dataPrimeiraParcela,
+            input.ehTaxaAnual,
+            input.indiceCorrecao
+          );
+          
+          return { parcelas };
+        } catch (error) {
+          console.error("Erro ao calcular MQJS:", error);
+          throw error;
+        }
       }),
 
     calcularDiferencaCorrigida: publicProcedure
