@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import TabelaParcelas from "./TabelaParcelas";
@@ -50,42 +50,31 @@ export default function CalculadoraRevisional() {
   const [resultadoMQJS, setResultadoMQJS] = useState<ResultadoCalculadora | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [queryParams, setQueryParams] = useState<any | null>(null);
-  const [queryParamsMQJS, setQueryParamsMQJS] = useState<any | null>(null);
   
-  const { data: resultadoQuery, isLoading: isQueryLoading, error: errorQuery } = trpc.calculadora.calcular.useQuery(
-    queryParams || { valorImovel: 0, entrada: 0, taxaJuros: 0, ehTaxaAnual: false, quantidadeParcelas: 0, dataContrato: "", dataPrimeiraParcela: "", quantidadeParcelasPagas: 0 }, 
-    { enabled: !!queryParams }
-  );
-  
-  const { data: resultadoQueryMQJS, isLoading: isQueryLoadingMQJS, error: errorQueryMQJS } = trpc.calculadora.calcularMQJS.useQuery(
-    queryParamsMQJS || { valorImovel: 0, entrada: 0, taxaJuros: 0, ehTaxaAnual: false, quantidadeParcelas: 0, dataContrato: "", dataPrimeiraParcela: "", quantidadeParcelasPagas: 0 }, 
-    { enabled: !!queryParamsMQJS }
-  );
-
-  // Atualizar resultado PRICE quando query retorna
-  useEffect(() => {
-    if (errorQuery) {
-      console.error("DEBUG: Erro na query PRICE:", errorQuery);
+  const { mutate: calcularPrice, isPending: isPendingPrice } = trpc.calculadora.calcular.useMutation({
+    onSuccess: (data) => {
+      console.log("DEBUG: Sucesso PRICE:", data);
+      setResultado(data);
+    },
+    onError: (error) => {
+      console.error("DEBUG: Erro PRICE:", error);
       toast.error("Erro ao calcular PRICE. Verifique os dados e tente novamente.");
-    }
-    if (resultadoQuery && !resultado) {
-      console.log("DEBUG: resultadoQuery recebido:", resultadoQuery);
-      setResultado(resultadoQuery);
-    }
-  }, [resultadoQuery, resultado, errorQuery]);
-
-  // Atualizar resultado MQJS quando query retorna
-  useEffect(() => {
-    if (errorQueryMQJS) {
-      console.error("DEBUG: Erro na query MQJS:", errorQueryMQJS);
-      toast.error("Erro ao calcular MQJS. Verifique os dados e tente novamente.");
-    }
-    if (resultadoQueryMQJS && !resultadoMQJS) {
-      console.log("DEBUG: resultadoQueryMQJS recebido:", resultadoQueryMQJS);
-      setResultadoMQJS(resultadoQueryMQJS);
       setIsLoading(false);
     }
-  }, [resultadoQueryMQJS, resultadoMQJS, errorQueryMQJS]);
+  });
+
+  const { mutate: calcularMQJS, isPending: isPendingMQJS } = trpc.calculadora.calcularMQJS.useMutation({
+    onSuccess: (data) => {
+      console.log("DEBUG: Sucesso MQJS:", data);
+      setResultadoMQJS(data);
+      setIsLoading(false);
+    },
+    onError: (error) => {
+      console.error("DEBUG: Erro MQJS:", error);
+      toast.error("Erro ao calcular MQJS. Verifique os dados e tente novamente.");
+      setIsLoading(false);
+    }
+  });
   
   const {
     register,
@@ -108,6 +97,7 @@ export default function CalculadoraRevisional() {
     try {
       setIsLoading(true);
       setResultado(null);
+      setResultadoMQJS(null);
 
       const valorImovel = parseFloat(data.valorImovel);
       const entrada = parseFloat(data.entrada);
@@ -153,8 +143,6 @@ export default function CalculadoraRevisional() {
         ? (data.indiceCorrecao as "INCC" | "IPCA")
         : undefined;
       
-      const quantidadeParcelasPagas = data.quantidadeParcelasPagas ? parseInt(data.quantidadeParcelasPagas) : 0;
-      
       const params = {
         valorImovel,
         entrada,
@@ -164,13 +152,13 @@ export default function CalculadoraRevisional() {
         dataContrato: data.dataContrato,
         dataPrimeiraParcela: data.vencimentoParcela,
         indiceCorrecao,
-        quantidadeParcelasPagas,
       };
-      console.log("DEBUG: Enviando params para queries:", params);
+      console.log("DEBUG: Enviando params para mutations:", params);
       setQueryParams(params);
-      setQueryParamsMQJS(params);
-      setResultado(null);
-      setResultadoMQJS(null);
+      
+      // Chamar mutations
+      calcularPrice(params);
+      calcularMQJS(params);
     } catch (error) {
       console.error("Erro ao calcular:", error);
       toast.error("Erro ao realizar cálculo. Tente novamente.");
@@ -331,10 +319,10 @@ export default function CalculadoraRevisional() {
 
             <Button
               type="submit"
-              disabled={isLoading}
+              disabled={isLoading || isPendingPrice || isPendingMQJS}
               className="w-full bg-blue-600 hover:bg-blue-700"
             >
-              {isLoading ? (
+              {isLoading || isPendingPrice || isPendingMQJS ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   Calculando...
