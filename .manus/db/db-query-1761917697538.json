@@ -1,0 +1,60 @@
+{
+  "query": "SELECT date, indexType, accumulated FROM daily_indices WHERE indexType = 'IPCA' ORDER BY date DESC LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3MN9iEmQUJboaPq.root --database eQB7vKmF3zqhgFdTow5mva --execute SELECT date, indexType, accumulated FROM daily_indices WHERE indexType = 'IPCA' ORDER BY date DESC LIMIT 10;",
+  "rows": [
+    {
+      "date": "2025-09-30",
+      "indexType": "IPCA",
+      "accumulated": "2.438729140153"
+    },
+    {
+      "date": "2025-09-29",
+      "indexType": "IPCA",
+      "accumulated": "2.438339908042"
+    },
+    {
+      "date": "2025-09-28",
+      "indexType": "IPCA",
+      "accumulated": "2.437950738053"
+    },
+    {
+      "date": "2025-09-27",
+      "indexType": "IPCA",
+      "accumulated": "2.437561630178"
+    },
+    {
+      "date": "2025-09-26",
+      "indexType": "IPCA",
+      "accumulated": "2.437172584407"
+    },
+    {
+      "date": "2025-09-25",
+      "indexType": "IPCA",
+      "accumulated": "2.436783600728"
+    },
+    {
+      "date": "2025-09-24",
+      "indexType": "IPCA",
+      "accumulated": "2.436394679134"
+    },
+    {
+      "date": "2025-09-23",
+      "indexType": "IPCA",
+      "accumulated": "2.436005819613"
+    },
+    {
+      "date": "2025-09-22",
+      "indexType": "IPCA",
+      "accumulated": "2.435617022155"
+    },
+    {
+      "date": "2025-09-21",
+      "indexType": "IPCA",
+      "accumulated": "2.435228286752"
+    }
+  ],
+  "messages": [],
+  "stdout": "date\tindexType\taccumulated\n2025-09-30\tIPCA\t2.438729140153\n2025-09-29\tIPCA\t2.438339908042\n2025-09-28\tIPCA\t2.437950738053\n2025-09-27\tIPCA\t2.437561630178\n2025-09-26\tIPCA\t2.437172584407\n2025-09-25\tIPCA\t2.436783600728\n2025-09-24\tIPCA\t2.436394679134\n2025-09-23\tIPCA\t2.436005819613\n2025-09-22\tIPCA\t2.435617022155\n2025-09-21\tIPCA\t2.435228286752\n",
+  "stderr": "",
+  "execution_time_ms": 62
+}
